@@ -39,6 +39,12 @@
         let index = row*rows + col;
         if(state === "blank"){
             populateBoard(index);
+            while(mCount < 1)
+            {
+                clearBoard();
+                populateBoard();
+            }
+            checkWin();
         }
         else {
             if(state === "probe") {
@@ -61,8 +67,9 @@
                     data[index] = "flag";
                     fCount++;
                 }
-                infoText = "Mines left: "+(mCount-fCount);
+                
             }
+            infoText = "Mines left: "+(mCount-fCount);
             checkWin();
         }
     }
@@ -102,6 +109,7 @@
     //recursively reveals blank squares and neighbors
     function revealFromIndex(startIndex) {
         if(data[startIndex] === "" || data[startIndex] === "flag"){
+            if(data[startIndex] === "flag") {fCount --;}
             if(hidden[startIndex] !== "mine")
             {
                 data[startIndex] = hidden[startIndex];
@@ -183,9 +191,12 @@
     <p>
         <strong>{infoText}</strong>
         {#if state !== "blank"}
-            <button class="btn 
+            <button class="btn  
             {
-                state === "probe" ? "bg-info" : (state === "flag" ? "bg-warning" : "")
+                state === "probe" ? "bg-info hover:bg-info" : 
+                state === "flag" ? "bg-warning hover:bg-warning" : 
+                state === "won" ? "bg-success hover:bg-success" : 
+                state === "lost" ? "bg-error hover:bg-error" : ""
             }" 
             on:click="{() => {
                 if(state === "probe") { state = "flag"; buttonText = "flag"; }
