@@ -65,7 +65,9 @@
 		</div>
 		<div class="navbar-end"></div>
 	</div>
-	<main class="p-4 flex-grow bg-gray-200"><slot></slot></main>
+	<main class="p-2 flex-grow bg-gray-200">
+		<div class="container mx-auto "><slot></slot></div>
+	</main>
 	<footer class="footer footer-center p-10 bg-neutral text-neutral-content">
 		<p>&copy;2022 Aidan E. Jones</p>
 	</footer>
