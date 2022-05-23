@@ -78,7 +78,7 @@
         //place mines
         fCount = 0;
         let m = 0;
-        for(var i = 0; i < area && m < Math.ceil(area*freq); i++){
+        for(var i = 0; i < area && m < Math.floor(area*freq); i++){
             data[i] = "";
             hidden[i] = 0;
             var r = Math.random();
