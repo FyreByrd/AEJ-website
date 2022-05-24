@@ -20,7 +20,7 @@
         0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0];
     
     let state = "blank";
-    let art = {
+    const art = {
         "":{bg_color:"#dfdfdf"},
         0:{bg_color:"#ffffff"},
         1:{bg_color:"#dfffff",color:"#00aaaa"},
@@ -32,7 +32,8 @@
         7:{bg_color:"#dfdfdf",color:"#555555"},
         8:{bg_color:"#dfdfdf",color:"#555555"},
         "mine":{src:assets+"/mine.png",alt:"a mine",bg_color:"#ff0000"},
-        "flag":{src:assets+"/flag.png",alt:"a flag",bg_color:"#ffdfdf"}};
+        "flag":{src:assets+"/flag.png",alt:"a flag",bg_color:"#ffdfdf"},
+        "found":{src:assets+"/mine.png",alt:"a flagged mine",bg_color:"#00ff99"},};
     
     //handles click of coordinate
     function handleClick(col, row){
@@ -47,13 +48,17 @@
             checkWin();
         }
         else {
+            if(!clickable(index)) return;
             if(state === "probe") {
                 if(hidden[index] === "mine") {
                     state = "lost";
                     infoText = "You lost!";
                     buttonText = "Play again?";
                     for(var i = 0; i < area; i++){
-                        data[i] = hidden[i];
+                        if(data[i] === "flag" && hidden[i] === "mine")
+                            data[i] = "found";
+                        else
+                            data[i] = hidden[i];
                     }
                     return;
                 }else {
@@ -160,6 +165,10 @@
         state = "blank";
         infoText = "Make a guess to begin";
     }
+    //returns true if box is clickable
+    function clickable(index) {
+        return !(data[index] !== "" && data[index] !== "flag")
+    }
 </script>
 
 <svelte:head>
@@ -173,9 +182,11 @@
         <tr>
             {#each Array(cols) as _, c}
             <td><span class="content">
-                <button class="btn box " on:click={() => handleClick(c, r)}
+                <button class="btn box {
+                        clickable(r*rows+c) ? "":"no-animation"
+                    }" on:click={() => handleClick(c, r)}
                     style="background-color:{art[data[r*rows+c]]["bg_color"]};">
-                    {#if data[r*rows+c] === "mine" || data[r*rows+c] === "flag"}
+                    {#if data[r*rows+c] === "mine" || data[r*rows+c] === "flag" || data[r*rows+c] === "found"}
                         <img src={art[data[r*rows+c]]["src"]} alt={art[data[r*rows+c]]["alt"]}/>
                     {:else if data[r*rows+c] === 0 || data[r*rows+c] === ""}
                     <span style="color:{art[data[r*rows+c]]["color"]}"/>
@@ -218,6 +229,7 @@
         margin-left: auto;
         margin-right: auto;
         padding: 0px;
+        border-radius: 5px;
     }
 
     tr {
@@ -248,6 +260,7 @@
         margin: 0px;
         padding: 0px;
         align-content: center;
+        border-radius: 0;
     }
     img {
         position: relative;
