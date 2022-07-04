@@ -202,7 +202,7 @@
     <p>
         <strong>{infoText}</strong>
         {#if state !== "blank"}
-            <button class="btn  
+            <button class="btn text-warning-content 
             {
                 state === "probe" ? "bg-info hover:bg-info" : 
                 state === "flag" ? "bg-warning hover:bg-warning" : 
