@@ -1,5 +1,6 @@
 <script>
 	import '../app.css';
+	import { onMount } from 'svelte';
 	let navlinks = [
 		{name:"Home",href:"/"},
 		{name:"About",href:"/about"},
@@ -8,6 +9,11 @@
 			{name:"Minesweeper",href:"/games/minesweeper"}
 		]
 	];
+
+	onMount(async () => {
+        const pkg = await import('theme-change');
+		pkg.themeChange(false);
+	})
 </script>
 
 <div class="flex flex-col h-screen">
@@ -63,8 +69,15 @@
 			{/each}
 			</ul>
 		</div>
-		<div class="navbar-end"></div>
+		<div class="navbar-end">
+			<select data-choose-theme class="select">
+				<option value="emerald">Light</option>
+				<option value="forest">Dark</option>
+			</select>
+		</div>
 	</div>
+	
+	<!--Nav End-->
 	<main class="p-2 flex-grow bg-base-100">
 		<div class="container mx-auto "><slot></slot></div>
 	</main>
