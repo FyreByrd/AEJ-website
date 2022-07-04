@@ -65,7 +65,7 @@
 		</div>
 		<div class="navbar-end"></div>
 	</div>
-	<main class="p-2 flex-grow bg-gray-200">
+	<main class="p-2 flex-grow bg-base-100">
 		<div class="container mx-auto "><slot></slot></div>
 	</main>
 	<footer class="footer footer-center p-10 bg-neutral text-neutral-content">
