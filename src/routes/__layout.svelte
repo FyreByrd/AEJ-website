@@ -4,6 +4,7 @@
 	let navlinks = [
 		{name:"Home",href:"/"},
 		{name:"About",href:"/about"},
+		{name:"Blog",href:"/blog"},
 		[
 			{name:"Games",href:"/games"},
 			{name:"Minesweeper",href:"/games/minesweeper"}
